@@ -23,7 +23,7 @@ do
 
     local hf_oicq_command = ProtoField.string("OICQ.Command", "Command")
 
-    local hf_oicq_seq = ProtoField.uint16("OICQ.Seq", "Sequence Number", base.DEC)
+    local hf_oicq_seq = ProtoField.uint16("OICQ.Seq", "Sequence", base.DEC)
 
     local hf_oicq_qqid = ProtoField.uint32("OICQ.QID", "OICQ Number", base.DEC)
 
@@ -134,9 +134,9 @@ do
         local cmd = buf(3, 2):uint()
 
         if command_list[cmd] then
-            t:add(hf_oicq_command, string.format("%s (%d)", command_list[cmd], cmd))
+            t:add(hf_oicq_command, buf(3, 2), string.format("%s (%d)", command_list[cmd], cmd))
         else
-            t:add(hf_oicq_command, string.format("Unknown (%d)", cmd))
+            t:add(hf_oicq_command, buf(3, 2), string.format("Unknown (%d)", cmd))
         end
 
         t:add(hf_oicq_seq, buf(5, 2))
